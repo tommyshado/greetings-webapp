@@ -1,0 +1,25 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: xx-large;
+    background-color: #A2D2FF;
+}
+
+#counter {
+    font-size: 40px;
+}
+
+.box-model {
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+/* coolors color scheme for my elements in html */
+
+.display {
+    background-color: #BDE0FE;
+    padding: 1.5em;
+}
+
+.danger {
+    color: red;
+}

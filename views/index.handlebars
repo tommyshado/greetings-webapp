@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+    <div class="container text-center">
+        <h1 class="box-model">Greet Exercise</h1>
+        <div class="row center">
+
+            <div class="col-12">
+                <div class="greetings-counter">
+                    <p id="counter">{{counter}}</p>
+                </div>
+            </div>
+            <p id="errorMsg"></p>
+
+            <form action="/sendGreeting" method="post">
+                <div class="col-12 box-model">
+
+                    <label>Enter name:</label>
+
+                    <input type="text" name="name" class="nameString" placeholder="Enter your name" value="">
+
+                </div>
+                
+
+                <div class="col-12 box-model">
+                    <div class="radio-buttons">
+
+                        <input type="radio" name="lang" class="language" value="IsiXhosa">IsiXhosa</input>
+                        <input type="radio" name="lang" class="language" value="Venda">Venda</input>
+                        <input type="radio" name="lang" class="language" value="English">English</input>
+
+                    </div>
+                    
+                </div>
+
+                {{!-- greet button --}}
+                <button type="submit" class="btn btn-outline-primary greetMeBtn">Greet user</button>
+            </form>
+
+            {{!-- element for the greeting --}}
+            <p id="greet" class="box-model">{{greet}}</p>
+            
+        </div>
+    </div>
+</body>
+</html>
