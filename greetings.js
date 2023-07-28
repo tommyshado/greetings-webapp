@@ -19,13 +19,16 @@ export default greetingsApp => {
     };
 
     const setGreetingWithLang = lang => {
-        if (lang === "IsiXhosa") {
-            greeting = `Molo, ${validUsername}`;
-        } else if (lang === "Venda") {
-            greeting = `Nda, ${validUsername}`;
-        } else if (lang === "English") {
-            greeting = `Hello, ${validUsername}`;
-        };
+
+        if (validUsername !== "") {
+            if (lang === "IsiXhosa") {
+                greeting = `Molo, ${validUsername}`;
+            } else if (lang === "Venda") {
+                greeting = `Nda, ${validUsername}`;
+            } else if (lang === "English") {
+                greeting = `Hello, ${validUsername}`;
+            };
+        }
     };
 
     const getGreeting = () => greeting;
