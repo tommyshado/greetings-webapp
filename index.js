@@ -45,6 +45,12 @@ app.post('/sendGreeting', (req, res) => {
     res.redirect('/')
 });
 
+app.get("/greeted", (req, res) => {
+    res.render("greeted-users", {
+        greetedUsers: greetings.greetedUsers()
+    });
+});
+
 
 const PORT = process.env.PORT || 3007;
 
