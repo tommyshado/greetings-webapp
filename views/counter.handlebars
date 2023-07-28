@@ -1,5 +1,5 @@
 <div class="row">
-    <h1>Greeted users data</h1>
+    <h1>User data</h1>
 
     <table>
         
@@ -8,9 +8,9 @@
             <th>Number of greet</th>
         </tr>
 
-        {{#each greetedUsers}}
+        {{#each name}}
         <tr>
-            <td><a href="/counter/{{username}}">{{username}}</a></td>
+            <td>{{username}}</td>
             <td>{{numberOfGreetings}}</td>
         </tr>
         {{/each}}

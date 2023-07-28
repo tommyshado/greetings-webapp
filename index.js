@@ -2,6 +2,8 @@ import express from "express";
 import greetingsApp from "./greetings.js"
 import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
+import flash from "express-flash";
+import session from "express-session";
 
 // instances
 const app = express();
