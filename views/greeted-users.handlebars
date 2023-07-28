@@ -1,0 +1,20 @@
+<div class="row">
+    <h1>Greeted users data</h1>
+
+    <table>
+        
+        <tr>
+            <th>Username</th>
+            <th>Number of greet</th>
+        </tr>
+
+        {{#each greetedUsers}}
+        <tr>
+            <td>{{username}}</td>
+            <td>{{numberOfGreet}}</td>
+        </tr>
+        {{/each}}
+
+    </table>
+    
+</div>
