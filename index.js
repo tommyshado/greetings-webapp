@@ -51,6 +51,14 @@ app.get("/greeted", (req, res) => {
     });
 });
 
+app.get("/counter/:username", (req, res) => {
+    const username = req.params.username;
+
+    res.render("counter", {
+        name: greetings.getUserData(username)
+    });
+});
+
 
 const PORT = process.env.PORT || 3007;
 
