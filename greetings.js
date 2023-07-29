@@ -10,7 +10,7 @@ export default greetingsApp => {
         if (pattern.test(name.toLowerCase())) {
             validUsername = name;
 
-            // CHECK if the object username equals to the validUsername variable
+            // CHECK if the object in greetedUsernames with username key equals to the validUsername variable
             const nameToBeGreeted = greetedUsernames.find(obj => obj.username === validUsername)
 
             if (nameToBeGreeted) {
@@ -42,9 +42,18 @@ export default greetingsApp => {
 
     const getGreeting = () => greeting;
 
-    // when the getGreeting() returns a greeting, GET the length of the greetedUsername keys
+    // when the getGreeting() returns a greeting, GET the length of the object inside greetedUsername 
     // OTHERWISE, the greetingsCounter() returns 0
-    const greetingsCounter = () => getGreeting() ? greetedUsernames.length : 0;
+    // const greetingsCounter = () => getGreeting() ? greetedUsernames.length : 0;
+
+    const greetingsCounter = () => {
+        let greetingsCount = 0;
+        greetedUsernames.forEach(userData => {
+            greetingsCount += userData.numberOfGreetings;
+        });
+
+        return greetingsCount;
+    };
 
 
     const greetedUsers = () => greetedUsernames;
