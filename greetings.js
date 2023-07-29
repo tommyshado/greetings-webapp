@@ -3,6 +3,7 @@ export default greetingsApp => {
 
     let validUsername = "";
     let greeting = "";
+    let allowCounterToIncrement = "";
 
     const setValidUsername = name => {
         let pattern = /^[a-zA-Z]+$/;
@@ -17,6 +18,7 @@ export default greetingsApp => {
                 nameToBeGreeted.numberOfGreetings++;
 
             } else {
+                
                 // PUSH the object with the user data
                 greetedUsernames.push({
                     username: validUsername,
@@ -27,9 +29,11 @@ export default greetingsApp => {
         };
     };
 
-    const setGreetingWithLang = lang => {
 
-        if (validUsername !== "") {
+    const setGreetingWithLang = lang => {
+        allowCounterToIncrement = lang;
+
+        if (validUsername !== "" && lang !== "") {
             if (lang === "IsiXhosa") {
                 greeting = `Molo, ${validUsername}`;
             } else if (lang === "Venda") {
@@ -48,15 +52,18 @@ export default greetingsApp => {
 
     const greetingsCounter = () => {
         let greetingsCount = 0;
-        greetedUsernames.forEach(userData => {
-            greetingsCount += userData.numberOfGreetings;
-        });
+
+        if (allowCounterToIncrement) {
+            greetedUsernames.forEach(userData => {
+                greetingsCount += userData.numberOfGreetings;
+            });
+        }
 
         return greetingsCount;
     };
 
 
-    const greetedUsers = () => greetedUsernames;
+    const greetedUsers = () => allowCounterToIncrement ? greetedUsernames : greetedUsernames;
 
     const getUserData = name => greetedUsernames.filter(userData => userData.username === name);
 
