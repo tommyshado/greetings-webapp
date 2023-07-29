@@ -4,6 +4,7 @@ import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
 import flash from "express-flash";
 import session from "express-session";
+import Client from "pg/lib/client.js";
 
 // instances
 const app = express();
@@ -63,6 +64,23 @@ app.get("/counter/:username", (req, res) => {
 
 
 const PORT = process.env.PORT || 3007;
+
+// database connection string
+const dbConnectionString = `postgres://tommyshado:yzrNH0TDiKbqCMAlNzWP62tWqWLQ6Oqy@dpg-cj2fspp8g3n1jkihu9dg-a.oregon-postgres.render.com:${PORT}/greetings_app_database`;
+
+// postgreSQL client instance
+const postgreSQLClient = new Client({
+    connectionString: dbConnectionString
+});
+
+// connecting to the database
+postgreSQLClient.connect()
+    .then(() => {
+        console.log("Connected to the database")
+    })
+    .catch(err => {
+        console.error("Error connecting to the database", err)
+    })
 
 app.listen(PORT, () => {
     console.log('app started at', PORT);
