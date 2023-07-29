@@ -7,9 +7,10 @@ export default greetingsApp => {
 
     const setValidUsername = name => {
         let pattern = /^[a-zA-Z]+$/;
+        let setNameToLowerCase = name.toLowerCase();
 
-        if (pattern.test(name.toLowerCase())) {
-            validUsername = name;
+        if (pattern.test(setNameToLowerCase)) {
+            validUsername = setNameToLowerCase;
 
             // CHECK if the object in greetedUsernames with username key equals to the validUsername variable
             const nameToBeGreeted = greetedUsernames.find(obj => obj.username === validUsername)
