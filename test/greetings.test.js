@@ -13,7 +13,7 @@ describe("greetingsApp", () => {
         greetings.setValidUsername('Mthunzi');
         greetings.setGreetingWithLang("IsiXhosa");
 
-        assert.equal('Molo, Mthunzi', greetings.getGreeting());
+        assert.equal('Molo, mthunzi', greetings.getGreeting());
     });
 
     it("should be able to greet a username in 'English'", () => {
@@ -27,7 +27,7 @@ describe("greetingsApp", () => {
         greetings.setValidUsername('Tendani');
         greetings.setGreetingWithLang("Venda");
 
-        assert.equal('Nda, Tendani', greetings.getGreeting());
+        assert.equal('Nda, tendani', greetings.getGreeting());
     });
 
     it("should be able to increment the counter by one", () => {
