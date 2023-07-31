@@ -1,79 +1,98 @@
-export default greetingsApp => {
-    const greetedUsernames = [];
+const greetingsApp = (db) => {
+//   const greetedUsernames = [];
 
-    let validUsername = "";
-    let greeting = "";
-    let allowCounterToIncrement = "";
+  let validUsername = "";
+  let greeting = "";
+  let allowCounterToIncrement = "";
 
-    const setValidUsername = name => {
-        let pattern = /^[a-zA-Z]+$/;
-        let setNameToLowerCase = name.toLowerCase();
+  const setValidUsername = async (name) => {
+    let pattern = /^[a-zA-Z]+$/;
+    let setNameToLowerCase = name.toLowerCase();
 
-        if (pattern.test(setNameToLowerCase)) {
-            validUsername = setNameToLowerCase;
+    if (pattern.test(setNameToLowerCase)) {
+      validUsername = setNameToLowerCase;
 
-            // CHECK if the object in greetedUsernames with username key equals to the validUsername variable
-            const nameToBeGreeted = greetedUsernames.find(obj => obj.username === validUsername)
+      // CHECK if the object in greetedUsernames with username key equals to the validUsername variable
+      // const nameToBeGreeted = greetedUsernames.find(obj => obj.username === validUsername);
 
-            if (nameToBeGreeted) {
-                nameToBeGreeted.numberOfGreetings++;
+      let nameToBeGreeted = await db.oneOrNone(
+        "SELECT name FROM greetings WHERE name = $1",
+        name
+      );
 
-            } else {
-                
-                // PUSH the object with the user data
-                greetedUsernames.push({
-                    username: validUsername,
-                    numberOfGreetings: 1
-                })
-            };
+      if (nameToBeGreeted) {
+        await db.none("UPDATE greetings SET count = count + 1 WHERE name = $1", name)
+        // nameToBeGreeted.numberOfGreetings++;
+      } else {
+       await db.none("INSERT INTO greetings (name, count) values ($1, $2)", [name, 1])
+      }
+    }
+  };
 
+  const setGreetingWithLang = (lang) => {
+    allowCounterToIncrement = lang;
+
+    if (validUsername !== "" && lang !== "") {
+      if (lang === "IsiXhosa") {
+        greeting = `Molo, ${validUsername}`;
+      } else if (lang === "Venda") {
+        greeting = `Nda, ${validUsername}`;
+      } else if (lang === "English") {
+        greeting = `Hello, ${validUsername}`;
+      }
+    }
+  };
+
+  const getGreeting = () => greeting;
+
+  // when the getGreeting() returns a greeting, GET the length of the object inside greetedUsername
+  // OTHERWISE, the greetingsCounter() returns 0
+  // const greetingsCounter = () => getGreeting() ? greetedUsernames.length : 0;
+
+  const greetingsCounter = async () => {
+    // let greetingsCount = 0;
+
+    // if (allowCounterToIncrement) {
+    //   greetedUsernames.forEach((userData) => {
+    //     if (userData.numberOfGreetings === 1) {
+    //       greetingsCount += userData.numberOfGreetings;
+    //     } else if (userData.numberOfGreetings > 1) {
+    //       greetingsCount += userData.numberOfGreetings;
+    //     }
+    //   });
+    // }
+
+    // return greetingsCount;
+
+    return await db.oneOrNone("SELECT SUM(count) FROM greetings");
+
+  };
+
+  const greetedUsers = async () => await db.any("SELECT * FROM greetings");
+
+  const getUserData = async (userName) => {
+    // greetedUsernames.filter((userData) => userData.username === name);
+
+    let database = await db.any("SELECT * FROM greetings");
+    let userDataArray = [];
+    
+    database.forEach(userData => {
+        if (userData.name === userName) {
+            userDataArray.push(userData);
         };
-    };
+    });
 
+    return userDataArray;
+  };
 
-    const setGreetingWithLang = lang => {
-        allowCounterToIncrement = lang;
-
-        if (validUsername !== "" && lang !== "") {
-            if (lang === "IsiXhosa") {
-                greeting = `Molo, ${validUsername}`;
-            } else if (lang === "Venda") {
-                greeting = `Nda, ${validUsername}`;
-            } else if (lang === "English") {
-                greeting = `Hello, ${validUsername}`;
-            };
-        }
-    };
-
-    const getGreeting = () => greeting;
-
-    // when the getGreeting() returns a greeting, GET the length of the object inside greetedUsername 
-    // OTHERWISE, the greetingsCounter() returns 0
-    // const greetingsCounter = () => getGreeting() ? greetedUsernames.length : 0;
-
-    const greetingsCounter = () => {
-        let greetingsCount = 0;
-
-        if (allowCounterToIncrement) {
-            greetedUsernames.forEach(userData => {
-                greetingsCount += userData.numberOfGreetings;
-            });
-        }
-
-        return greetingsCount;
-    };
-
-
-    const greetedUsers = () => allowCounterToIncrement ? greetedUsernames : greetedUsernames;
-
-    const getUserData = name => greetedUsernames.filter(userData => userData.username === name);
-
-    return {
-        setValidUsername,
-        setGreetingWithLang,
-        getGreeting,
-        greetingsCounter,
-        greetedUsers,
-        getUserData
-    };
+  return {
+    setValidUsername,
+    setGreetingWithLang,
+    getGreeting,
+    greetingsCounter,
+    greetedUsers,
+    getUserData,
+  };
 };
+
+export default greetingsApp;
