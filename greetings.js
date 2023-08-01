@@ -3,7 +3,7 @@ const greetingsApp = (db) => {
 
   let validUsername = "";
   let greeting = "";
-  let allowCounterToIncrement = "";
+  // let allowCounterToIncrement = "";
 
   const setValidUsername = async (name) => {
     let pattern = /^[a-zA-Z]+$/;
@@ -17,20 +17,20 @@ const greetingsApp = (db) => {
 
       let nameToBeGreeted = await db.oneOrNone(
         "SELECT name FROM greetings WHERE name = $1",
-        name
+        setNameToLowerCase
       );
 
       if (nameToBeGreeted) {
-        await db.none("UPDATE greetings SET count = count + 1 WHERE name = $1", name)
+        await db.none("UPDATE greetings SET count = count + 1 WHERE name = $1", setNameToLowerCase)
         // nameToBeGreeted.numberOfGreetings++;
       } else {
-       await db.none("INSERT INTO greetings (name, count) values ($1, $2)", [name, 1])
+       await db.none("INSERT INTO greetings (name, count) values ($1, $2)", [setNameToLowerCase, 1])
       }
     }
   };
 
   const setGreetingWithLang = (lang) => {
-    allowCounterToIncrement = lang;
+    // allowCounterToIncrement = lang;
 
     if (validUsername !== "" && lang !== "") {
       if (lang === "IsiXhosa") {
@@ -64,7 +64,16 @@ const greetingsApp = (db) => {
 
     // return greetingsCount;
 
-    return await db.oneOrNone("SELECT SUM(count) FROM greetings");
+    let database = await db.any("SELECT * FROM greetings");
+    let counter = 0;
+    
+    database.forEach(userData => {
+        if (userData.name !== validUsername) {
+          counter += userData.count;
+        };
+    });
+
+    return counter;
 
   };
 
