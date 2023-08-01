@@ -49,33 +49,7 @@ const greetingsApp = (db) => {
   // OTHERWISE, the greetingsCounter() returns 0
   // const greetingsCounter = () => getGreeting() ? greetedUsernames.length : 0;
 
-  const greetingsCounter = async () => {
-    // let greetingsCount = 0;
-
-    // if (allowCounterToIncrement) {
-    //   greetedUsernames.forEach((userData) => {
-    //     if (userData.numberOfGreetings === 1) {
-    //       greetingsCount += userData.numberOfGreetings;
-    //     } else if (userData.numberOfGreetings > 1) {
-    //       greetingsCount += userData.numberOfGreetings;
-    //     }
-    //   });
-    // }
-
-    // return greetingsCount;
-
-    let database = await db.any("SELECT * FROM greetings");
-    let counter = 0;
-    
-    database.forEach(userData => {
-        if (userData.name !== validUsername) {
-          counter += userData.count;
-        };
-    });
-
-    return counter;
-
-  };
+  const greetingsCounter = async () => await db.oneOrNone("SELECT COUNT(name) FROM greetings");
 
   const greetedUsers = async () => await db.any("SELECT * FROM greetings");
 
