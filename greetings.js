@@ -7,7 +7,7 @@ const greetingsApp = (db) => {
 
   const setValidUsername = async (name) => {
     let pattern = /^[a-zA-Z]+$/;
-    let setNameToLowerCase = name.toLowerCase();
+    let setNameToLowerCase = name.toLowerCase().trim();
 
     if (pattern.test(setNameToLowerCase)) {
       validUsername = setNameToLowerCase;
