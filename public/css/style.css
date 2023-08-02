@@ -1,7 +1,7 @@
 body {
     font-family: 'Courier New', Courier, monospace;
     font-size: xx-large;
-    background-color: #A2D2FF;
+    background-color: #fff;
 }
 
 #counter {
@@ -16,7 +16,7 @@ body {
 /* coolors color scheme for my elements in html */
 
 .display {
-    background-color: #BDE0FE;
+    background-color: #fff;
     padding: 1.5em;
 }
 

@@ -16,6 +16,21 @@ const pgp = pgPromise();
 
 import "dotenv/config";
 
+const messagesFlash = flash()
+
+
+ // initialise session middleware - flash-express depends on it
+ app.use(session({
+  secret : "<add a secret string here>",
+  resave: false,
+  saveUninitialized: true
+}));
+
+// initialise the flash middleware
+app.use(flash());
+
+
+
 let useSSL = false;
 let local = process.env.LOCAL || false;
 if (process.env.DB_URL && !local) {
@@ -55,14 +70,15 @@ app.get("/", async (req, res) => {
     // console.log(setData);
   res.render("index", {
     greet: greetings.getGreeting(),
-    counter: await greetings.greetingsCounter()
+    counter: await greetings.greetingsCounter(),
+    msg: greetings.getMessage()
   });
 });
 
-app.post("/sendGreeting", (req, res) => {
+app.post("/sendGreeting", async (req, res) => {
   // set the username and language into the factory function
-  greetings.setValidUsername(req.body.name);
-  greetings.setGreetingWithLang(req.body.lang);
+  await greetings.setValidUsername(req.body.name);
+  greetings.greetName(req.body.lang);
 
   res.redirect("/");
 });

@@ -3,7 +3,7 @@ const greetingsApp = (db) => {
 
   let validUsername = "";
   let greeting = "";
-  // let allowCounterToIncrement = "";
+  let message = "";
 
   const setValidUsername = async (name) => {
     let pattern = /^[a-zA-Z]+$/;
@@ -26,13 +26,15 @@ const greetingsApp = (db) => {
       } else {
        await db.none("INSERT INTO greetings (name, count) values ($1, $2)", [setNameToLowerCase, 1])
       }
+    } else {
+      message = "Please, enter a valid name.";
     }
   };
 
-  const setGreetingWithLang = (lang) => {
+  const greetName = (lang) => {
     // allowCounterToIncrement = lang;
 
-    if (validUsername !== "" && lang !== "") {
+    if (validUsername !== "" && lang !== undefined) {
       if (lang === "IsiXhosa") {
         greeting = `Molo, ${validUsername}`;
       } else if (lang === "Venda") {
@@ -40,6 +42,8 @@ const greetingsApp = (db) => {
       } else if (lang === "English") {
         greeting = `Hello, ${validUsername}`;
       }
+    } else if (lang === undefined) {
+      message = "Please, select a language.";
     }
   };
 
@@ -68,13 +72,20 @@ const greetingsApp = (db) => {
     return userDataArray;
   };
 
+  const getMessage = () => {
+    return {
+      message
+    }
+  }
+
   return {
     setValidUsername,
-    setGreetingWithLang,
+    greetName,
     getGreeting,
     greetingsCounter,
     greetedUsers,
     getUserData,
+    getMessage
   };
 };
 
