@@ -98,7 +98,7 @@ app.get("/counter/:username", async (req, res) => {
 });
 
 app.post("/reset", async (req, res) => {
-  greetings.resetApp();
+  await greetings.resetApp();
   res.redirect("/");
 })
 
