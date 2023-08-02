@@ -27,7 +27,7 @@ const greetingsApp = (db) => {
        await db.none("INSERT INTO greetings (name, count) values ($1, $2)", [setNameToLowerCase, 1])
       }
     } else {
-      message = "Please, enter a valid name.";
+      message = "Please, enter a valid name. eg. ABCDEabcde";
     }
   };
 
