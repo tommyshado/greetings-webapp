@@ -78,6 +78,12 @@ const greetingsApp = (db) => {
     }
   }
 
+  const resetApp = async () => {
+    greeting = "";
+    message = "";
+    await db.none("DELETE FROM greetings");
+  };
+
   return {
     setValidUsername,
     greetName,
@@ -85,7 +91,8 @@ const greetingsApp = (db) => {
     greetingsCounter,
     greetedUsers,
     getUserData,
-    getMessage
+    getMessage,
+    resetApp
   };
 };
 

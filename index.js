@@ -97,6 +97,11 @@ app.get("/counter/:username", async (req, res) => {
   });
 });
 
+app.post("/reset", async (req, res) => {
+  greetings.resetApp();
+  res.redirect("/");
+})
+
 const PORT = process.env.PORT || 3007;
 
 // database connection string
