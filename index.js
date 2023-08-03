@@ -5,6 +5,8 @@ import bodyParser from "body-parser";
 import flash from "express-flash";
 import session from "express-session";
 
+import chalk from 'chalk';
+
 const app = express();
 
 // import Client from "pg/lib/client.js";
@@ -38,6 +40,8 @@ const DB_URL = process.env.DB_URL;
 const config = { 
     connectionString : DB_URL
 }
+
+console.log(config);
 
 let db = pgp(config);
 const greetings = greetingsApp(db);

@@ -1,15 +1,35 @@
 import assert from "assert"
 import greetingsApp from "../greetings.js";
+import pgPromise from "pg-promise";
+import "dotenv/config";
+
+// pg promise instance
+const pgp = pgPromise();
+
+let useSSL = false;
+let local = process.env.LOCAL || false;
+
+if (process.env.DB_URL && !local) {
+    useSSL = true;
+}
+
+const DB_URL = process.env.DB_URL;
+
+const config = { 
+    connectionString : DB_URL
+}
+
+let db = pgp(config);
 
 
 describe("greetingsApp", () => {
     let greetings;
 
     beforeEach(() => {
-        greetings = greetingsApp();
+        greetings = greetingsApp(db);
     });
 
-    it("should be able to greet a username in 'IsiXhosa'", () => {
+    it("should be able to greet a username in 'IsiXhosa'", asy() => {
         greetings.setValidUsername('Mthunzi');
         greetings.setGreetingWithLang("IsiXhosa");
 

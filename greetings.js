@@ -4,7 +4,7 @@ const greetingsApp = (db) => {
   let validUsername = "";
   let greeting = "";
   let message = "";
-  // let allowCounterToIncrement;
+  let incrementCount = undefined;
   
   const setValidUsername = async (name) => {
     let pattern = /^[a-zA-Z]+$/;
@@ -35,7 +35,8 @@ const greetingsApp = (db) => {
   const greetName = (lang) => {
     
     if (validUsername !== "" && lang !== undefined) {
-      // allowCounterToIncrement = lang;
+      incrementCount = lang;
+
       if (lang === "IsiXhosa") {
         greeting = `Molo, ${validUsername}`;
       } else if (lang === "Venda") {
@@ -43,8 +44,10 @@ const greetingsApp = (db) => {
       } else if (lang === "English") {
         greeting = `Hello, ${validUsername}`;
       }
+  
     } else if (validUsername === "" && lang === undefined) {
       message = "Please enter name and select language.";
+
     } else if (lang === undefined) {
       message = "Please, select a language.";
     }
