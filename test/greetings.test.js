@@ -16,15 +16,15 @@ describe("greetingsApp", () => {
 
     beforeEach(async () => {
         try {
+            greetings = greetingsApp(db);
             // clean the tables before each test run
-            await db.none("TRUNCATE TABLE greetings_test RESTART IDENTITY CASCADE;");
+            await db.none("TRUNCATE TABLE greetings RESTART IDENTITY CASCADE;");
 
         } catch (err) {
             console.log(err);
             throw err;
         };
 
-        greetings = greetingsApp(db);
     });
 
     it("should be able to greet a username in 'IsiXhosa'", async () => {
