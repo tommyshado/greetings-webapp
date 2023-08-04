@@ -4,7 +4,7 @@ const greetingsApp = (db) => {
   let validUsername = "";
   let greeting = "";
   let message = "";
-  let incrementCount = undefined;
+  let language;
   
   const setValidUsername = async (name) => {
     let pattern = /^[a-zA-Z]+$/;
@@ -18,14 +18,14 @@ const greetingsApp = (db) => {
 
       let nameToBeGreeted = await db.oneOrNone(
         "SELECT name FROM greetings WHERE name = $1",
-        setNameToLowerCase
+        validUsername
       );
 
       if (nameToBeGreeted) {
-        await db.none("UPDATE greetings SET count = count + 1 WHERE name = $1", setNameToLowerCase)
+        await db.none("UPDATE greetings SET count = count + 1 WHERE name = $1", validUsername)
         // nameToBeGreeted.numberOfGreetings++;
       } else {
-        await db.none("INSERT INTO greetings (name, count) values ($1, $2)", [setNameToLowerCase, 1])
+        await db.none("INSERT INTO greetings (name, count) values ($1, $2)", [validUsername, 1])
       }
     } else {
       message = "Please, enter a valid name. eg. ABCDEabcde";
@@ -35,16 +35,16 @@ const greetingsApp = (db) => {
   const greetName = (lang) => {
     
     if (validUsername !== "" && lang !== undefined) {
-      incrementCount = lang;
-
-      if (lang === "IsiXhosa") {
+      language = lang;
+      
+      if (language === "IsiXhosa") {
         greeting = `Molo, ${validUsername}`;
-      } else if (lang === "Venda") {
+      } else if (language === "Venda") {
         greeting = `Nda, ${validUsername}`;
-      } else if (lang === "English") {
+      } else if (language === "English") {
         greeting = `Hello, ${validUsername}`;
       }
-  
+      
     } else if (validUsername === "" && lang === undefined) {
       message = "Please enter name and select language.";
 

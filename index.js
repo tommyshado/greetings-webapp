@@ -31,19 +31,34 @@ import "dotenv/config";
 
 
 
-let useSSL = false;
-let local = process.env.LOCAL || false;
-if (process.env.DB_URL && !local) {
-    useSSL = true;
-}
-const DB_URL = process.env.DB_URL;
-const config = { 
-    connectionString : DB_URL
+// let useSSL = false;
+// let local = process.env.LOCAL || false;
+// if (process.env.DB_URL && !local) {
+//     useSSL = true;
+// }
+// const DB_URL = process.env.DB_URL;
+// const config = { 
+//     connectionString : DB_URL
+// }
+
+// console.log(config);
+
+// let db = pgp(config);
+
+const databaseURL = process.env.DB_URL;
+
+const config = {
+  connectionString: databaseURL
 }
 
-console.log(config);
+if (process.env.NODE_ENV === "production") {
+  config.ssl = {
+    rejectUnauthorized: false
+  }
+}
 
-let db = pgp(config);
+const db = pgp(config);
+
 const greetings = greetingsApp(db);
 
 const handlebarSetup = exphbs.engine({
