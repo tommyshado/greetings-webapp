@@ -1,12 +1,12 @@
-const greetingsApp = (db) => {
-  //   const greetedUsernames = [];
+const greetingsApp = db => {
+//   const greetedUsernames = [];
 
   let validUsername = "";
   let greeting = "";
   let message = "";
   let language;
-
-  const setValidUsername = async (name) => {
+  
+  const setValidUsername = async name => {
     let pattern = /^[a-zA-Z]+$/;
     let lowerCaseName = name.toLowerCase().trim();
 
@@ -17,31 +17,26 @@ const greetingsApp = (db) => {
       // const nameToBeGreeted = greetedUsernames.find(obj => obj.username === validUsername);
 
       let nameToBeGreeted = await db.oneOrNone(
-        "SELECT name FROM greetings WHERE name = $1",
+        "SELECT username FROM greeting.greetings WHERE username = $1",
         validUsername
       );
 
       if (nameToBeGreeted) {
-        await db.none(
-          "UPDATE greetings SET count = count + 1 WHERE name = $1",
-          validUsername
-        );
+        await db.none("UPDATE greeting.greetings SET counter = counter + 1 WHERE username = $1", validUsername)
         // nameToBeGreeted.numberOfGreetings++;
       } else {
-        await db.none("INSERT INTO greetings (name, count) values ($1, $2)", [
-          validUsername,
-          1,
-        ]);
+        await db.none("INSERT INTO greeting.greetings (username, counter) values ($1, $2)", [validUsername, 1])
       }
     } else {
       message = "Please, enter a valid name. eg. ABCDEabcde";
     }
   };
 
-  const greetName = (lang) => {
-    if (validUsername !== "" && lang !== undefined) {
+  const greetName = lang => {
+    
+    if (validUsername && lang) {
       language = lang;
-
+      
       if (language === "IsiXhosa") {
         greeting = `Molo, ${validUsername}`;
       } else if (language === "Venda") {
@@ -49,9 +44,11 @@ const greetingsApp = (db) => {
       } else if (language === "English") {
         greeting = `Hello, ${validUsername}`;
       }
-    } else if (validUsername === "" && lang === undefined) {
+      
+    } else if (!validUsername && !lang) {
       message = "Please enter name and select language.";
-    } else if (lang === undefined) {
+
+    } else if (!lang) {
       message = "Please, select a language.";
     }
   };
@@ -62,37 +59,35 @@ const greetingsApp = (db) => {
   // OTHERWISE, the greetingsCounter() returns 0
   // const greetingsCounter = () => getGreeting() ? greetedUsernames.length : 0;
 
-  const greetingsCounter = async () =>
-    await db.oneOrNone("SELECT COUNT(name) FROM greetings");
+  const greetingsCounter = async () => await db.oneOrNone("SELECT COUNT(username) FROM greeting.greetings");
 
-  const greetedUsers = async () =>
-    await db.any("SELECT * FROM greetings ORDER BY count DESC");
+  const greetedUsers = async () => await db.any("SELECT * FROM greeting.greetings ORDER BY counter DESC");
 
-  const getUserData = async (userName) => {
+  const getUserData = async userName => {
     // greetedUsernames.filter((userData) => userData.username === name);
 
-    let database = await db.any("SELECT * FROM greetings");
+    let database = await db.any("SELECT * FROM greeting.greetings");
     let userDataArray = [];
-
-    database.forEach((userData) => {
-      if (userData.name === userName) {
-        userDataArray.push(userData);
-      }
+    
+    database.forEach(userData => {
+        if (userData.username === userName) {
+            userDataArray.push(userData);
+        };
     });
 
     return userDataArray;
   };
 
   const getMessage = () => {
-    return {
-      message,
-    };
+    return { 
+      message
+    }
   };
 
   const resetApp = async () => {
     greeting = "";
     message = "";
-    await db.none("DELETE FROM greetings");
+    await db.none("DELETE FROM greeting.greetings");
   };
 
   return {
@@ -103,7 +98,7 @@ const greetingsApp = (db) => {
     greetedUsers,
     getUserData,
     getMessage,
-    resetApp,
+    resetApp
   };
 };
 

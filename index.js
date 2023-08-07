@@ -19,15 +19,15 @@ const pgp = pgPromise();
 import "dotenv/config";
 
 
-//  // initialise session middleware - flash-express depends on it
-//  app.use(session({
-//   secret : "<add a secret string here>",
-//   resave: false,
-//   saveUninitialized: true
-// }));
+ // initialise session middleware - flash-express depends on it
+ app.use(session({
+  secret : "codeXer",
+  resave: false,
+  saveUninitialized: true
+}));
 
-// // initialise the flash middleware
-// app.use(flash());
+// initialise the flash middleware
+app.use(flash());
 
 const databaseURL = process.env.DB_URL;
 
