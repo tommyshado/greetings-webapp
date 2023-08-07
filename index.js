@@ -29,22 +29,6 @@ import "dotenv/config";
 // // initialise the flash middleware
 // app.use(flash());
 
-
-
-// let useSSL = false;
-// let local = process.env.LOCAL || false;
-// if (process.env.DB_URL && !local) {
-//     useSSL = true;
-// }
-// const DB_URL = process.env.DB_URL;
-// const config = { 
-//     connectionString : DB_URL
-// }
-
-// console.log(config);
-
-// let db = pgp(config);
-
 const databaseURL = process.env.DB_URL;
 
 const config = {

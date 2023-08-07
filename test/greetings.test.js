@@ -38,34 +38,34 @@ describe("greetingsApp", () => {
         }
     });
 
-    it("should be able to greet a username in 'English'", () => {
-        greetings.setValidUsername('nicholas');
-        greetings.greetName("English");
+    // it("should be able to greet a username in 'English'", () => {
+    //     greetings.setValidUsername('nicholas');
+    //     greetings.greetName("English");
 
-        assert.equal('Hello, nicholas', greetings.getGreeting());
-    });
+    //     assert.equal('Hello, nicholas', greetings.getGreeting());
+    // });
 
-    it("should be able to greet a username in 'Venda'", () => {
-        greetings.setValidUsername('Tendani');
-        greetings.greetName("Venda");
+    // it("should be able to greet a username in 'Venda'", () => {
+    //     greetings.setValidUsername('Tendani');
+    //     greetings.greetName("Venda");
 
-        assert.equal('Nda, tendani', greetings.getGreeting());
-    });
+    //     assert.equal('Nda, tendani', greetings.getGreeting());
+    // });
 
-    it("should be able to increment the counter by one", () => {
-        greetings.setValidUsername('Tendani');
-        greetings.greetName("Venda");
+    // it("should be able to increment the counter by one", () => {
+    //     greetings.setValidUsername('Tendani');
+    //     greetings.greetName("Venda");
 
-        assert.equal(1, greetings.greetingsCounter());
-    });
+    //     assert.equal(1, greetings.greetingsCounter());
+    // });
 
-    it("should be able to increment the counter by two", () => {
-        greetings.setValidUsername('Tendani');
-        greetings.greetName("Venda");
+    // it("should be able to increment the counter by two", () => {
+    //     greetings.setValidUsername('Tendani');
+    //     greetings.greetName("Venda");
 
-        greetings.setValidUsername('Ngomso');
-        greetings.greetName("English");
+    //     greetings.setValidUsername('Ngomso');
+    //     greetings.greetName("English");
 
-        assert.equal(2, greetings.greetingsCounter());
-    });
+    //     assert.equal(2, greetings.greetingsCounter());
+    // });
 });

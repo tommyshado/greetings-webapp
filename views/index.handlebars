@@ -19,7 +19,7 @@
                     <p id="counter">{{counter.count}}</p>
                 </div>
             </div>
-            <p id="errorMsg" class="danger">{{msg.message}}</p>
+            <p class="danger errorMsg">{{msg.message}}</p>
 
             <form action="/sendGreeting" method="post">
                 <div class="col-12 box-model">
@@ -43,7 +43,10 @@
                 </div>
 
                 {{!-- greet button --}}
-                <button type="submit" class="btn btn-outline-primary greetMeBtn">Greet user</button>
+
+                <div>
+                    <button type="submit" class="btn btn-outline-primary greetMeBtn">Greet user</button>
+                </div>
 
                 <div>
                     {{!-- element for the greeted users --}}
@@ -53,7 +56,7 @@
             </form>
 
             <form action="/reset" method="post">
-                <button type="submit" class="btn btn-outline-primary"> Reset</button>
+                <button type="submit" class="btn btn-outline-primary resetBtn"> Reset</button>
             </form>
 
             {{!-- element for the greeting --}}
