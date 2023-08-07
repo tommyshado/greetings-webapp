@@ -38,18 +38,18 @@ describe("greetingsApp", () => {
 
     it("should be able to increment the counter by one", async () => {
         await greetings.setValidUsername('Tendani');
-        greetings.greetName("Venda");
+        
+        const counter = await greetings.greetingsCounter();
 
-        assert.equal(1, await greetings.greetingsCounter());
+        assert.equal(1, counter.count);
     });
 
     it("should be able to increment the counter by two", async () => {
         await greetings.setValidUsername('Tendani');
-        greetings.greetName("Venda");
-
         await greetings.setValidUsername('Ngomso');
-        greetings.greetName("English");
 
-        assert.equal(2, await greetings.greetingsCounter());
+        const counter = await greetings.greetingsCounter();
+
+        assert.equal(2, counter.count);
     });
 });
