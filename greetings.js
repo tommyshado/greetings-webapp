@@ -7,28 +7,33 @@ const greetingsApp = db => {
   let language;
   
   const setValidUsername = async name => {
+    validUsername = "";
     let pattern = /^[a-zA-Z]+$/;
     let lowerCaseName = name.toLowerCase().trim();
 
-    if (pattern.test(lowerCaseName)) {
-      validUsername = lowerCaseName;
-
-      // CHECK if the object in greetedUsernames with username key equals to the validUsername variable
-      // const nameToBeGreeted = greetedUsernames.find(obj => obj.username === validUsername);
-
-      let nameToBeGreeted = await db.oneOrNone(
-        "SELECT username FROM greeting.greetings WHERE username = $1",
-        validUsername
-      );
-
-      if (nameToBeGreeted) {
-        await db.none("UPDATE greeting.greetings SET counter = counter + 1 WHERE username = $1", validUsername)
-        // nameToBeGreeted.numberOfGreetings++;
-      } else if (!nameToBeGreeted) {
-        await db.none("INSERT INTO greeting.greetings (username, counter) values ($1, $2)", [validUsername, 1])
+    if (lowerCaseName) {
+      if (pattern.test(lowerCaseName)) {
+        validUsername = lowerCaseName;
+  
+        // CHECK if the object in greetedUsernames with username key equals to the validUsername variable
+        // const nameToBeGreeted = greetedUsernames.find(obj => obj.username === validUsername);
+  
+        let nameToBeGreeted = await db.oneOrNone(
+          "SELECT username FROM greeting.greetings WHERE username = $1",
+          validUsername
+        );
+  
+        if (nameToBeGreeted) {
+          await db.none("UPDATE greeting.greetings SET counter = counter + 1 WHERE username = $1", validUsername)
+          // nameToBeGreeted.numberOfGreetings++;
+        } else if (!nameToBeGreeted) {
+          await db.none("INSERT INTO greeting.greetings (username, counter) values ($1, $2)", [validUsername, 1])
+        }
+      } else {
+        message = "Please, enter a valid name. eg. ABCDEabcde";
       }
     } else {
-      message = "Please, enter a valid name. eg. ABCDEabcde";
+      message = "Please enter your name.";
     }
   };
 
