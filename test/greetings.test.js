@@ -12,13 +12,13 @@ const connectionString = process.env.DB_URL;
 
 const db = pgp(connectionString);
 
-describe("greetingsApp", () => {
-    let greetings;
+describe("greetingsApp", function () {
+    this.timeout(5000);
+    let greetings = greetingsApp(db);
 
-    beforeEach(async function() {
+    this.beforeEach(async function() {
 
-        this.timeout(5000);
-        greetings = greetingsApp(db);
+        // greetings = 
         await db.none("DELETE FROM greeting.greetings");
     });
 
