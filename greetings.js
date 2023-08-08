@@ -4,9 +4,8 @@ const greetingsApp = db => {
   let validUsername = "";
   let greeting = "";
   let message = "";
-  let language;
   
-  const setValidUsername = async name => {
+  const setValidUsername = async (name, lang) => {
     validUsername = "";
     let pattern = /^[a-zA-Z]+$/;
     let lowerCaseName = name.toLowerCase().trim();
@@ -26,7 +25,7 @@ const greetingsApp = db => {
         if (nameToBeGreeted) {
           await db.none("UPDATE greeting.greetings SET counter = counter + 1 WHERE username = $1", validUsername)
           // nameToBeGreeted.numberOfGreetings++;
-        } else if (!nameToBeGreeted) {
+        } else if (!nameToBeGreeted && lang) {
           await db.none("INSERT INTO greeting.greetings (username, counter) values ($1, $2)", [validUsername, 1])
         }
       } else {
@@ -40,13 +39,12 @@ const greetingsApp = db => {
   const greetName = lang => {
     
     if (validUsername && lang) {
-      language = lang;
       
-      if (language === "IsiXhosa") {
+      if (lang === "IsiXhosa") {
         greeting = `Molo, ${validUsername}`;
-      } else if (language === "Venda") {
+      } else if (lang === "Venda") {
         greeting = `Nda, ${validUsername}`;
-      } else if (language === "English") {
+      } else if (lang === "English") {
         greeting = `Hello, ${validUsername}`;
       }
       

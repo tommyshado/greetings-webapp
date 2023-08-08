@@ -3,7 +3,7 @@
 const greeting = greetingsLogic => {
 
     const sendGreeting = async (req, res) => {
-        await greetingsLogic.setValidUsername(req.body.name);
+        await greetingsLogic.setValidUsername(req.body.name, req.body.lang);
         await greetingsLogic.greetName(req.body.lang);
 
         req.flash("greeting", greetingsLogic.getGreeting());
