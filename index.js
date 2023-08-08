@@ -24,7 +24,7 @@ import "dotenv/config";
 import greeting from "./routes/greeting.js";
 import greetedUsers from "./routes/greeted_users.js";
 import allGreetedUsers from "./routes/users_data.js";
-
+import dataReset from "./routes/reset.js";
 
  // initialise session middleware - flash-express depends on it
  app.use(session({
@@ -58,6 +58,7 @@ const greetings = greetingsApp(db);
 const greetingRoute = greeting(greetings);
 const greeted = greetedUsers(greetings);
 const allGreeted = allGreetedUsers(greetings);
+const resetData = dataReset(greetings);
 
 
 const handlebarSetup = exphbs.engine({
@@ -89,10 +90,7 @@ app.get("/greeted", greeted.showGreeted);
 
 app.get("/counter/:username", allGreeted.all);
 
-app.post("/reset", async (req, res) => {
-  await greetings.resetApp();
-  res.redirect("/");
-})
+app.post("/reset", resetData.reset)
 
 const PORT = process.env.PORT || 3007;
 
