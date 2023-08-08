@@ -19,6 +19,13 @@ const pgp = pgPromise();
 import "dotenv/config";
 
 
+
+// routes modules
+import greeting from "./routes/greeting.js";
+import greetedUsers from "./routes/greeted_users.js";
+import allGreetedUsers from "./routes/users_data.js";
+
+
  // initialise session middleware - flash-express depends on it
  app.use(session({
   secret : "codeXer",
@@ -43,7 +50,15 @@ if (process.env.NODE_ENV === "production") {
 
 const db = pgp(config);
 
+
+// instance for logic
 const greetings = greetingsApp(db);
+
+// routes instances
+const greetingRoute = greeting(greetings);
+const greeted = greetedUsers(greetings);
+const allGreeted = allGreetedUsers(greetings);
+
 
 const handlebarSetup = exphbs.engine({
     partialsDir: "./views/partials",
@@ -66,37 +81,13 @@ app.use(express.static("public"));
 
 // ROUTES:
 
-app.get("/", async (req, res) => {
-    // let setData = await db.any('select * from greetings');
-    // console.log(setData);
-  res.render("index", {
-    greet: greetings.getGreeting(),
-    counter: await greetings.greetingsCounter(),
-    msg: greetings.getMessage()
-  });
-});
+app.get("/", greetingRoute.getGreeting);
 
-app.post("/sendGreeting", async (req, res) => {
-  // set the username and language into the factory function
-  await greetings.setValidUsername(req.body.name);
-  greetings.greetName(req.body.lang);
+app.post("/sendGreeting", greetingRoute.sendGreeting);
 
-  res.redirect("/");
-});
+app.get("/greeted", greeted.showGreeted);
 
-app.get("/greeted", async (req, res) => {
-  res.render("greeted-users", {
-    greetedUsers: await greetings.greetedUsers(),
-  });
-});
-
-app.get("/counter/:username", async (req, res) => {
-  const username = req.params.username;
-
-  res.render("counter", {
-    name: await greetings.getUserData(username),
-  });
-});
+app.get("/counter/:username", allGreeted.all);
 
 app.post("/reset", async (req, res) => {
   await greetings.resetApp();

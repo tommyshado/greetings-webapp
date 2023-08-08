@@ -24,7 +24,7 @@ const greetingsApp = db => {
       if (nameToBeGreeted) {
         await db.none("UPDATE greeting.greetings SET counter = counter + 1 WHERE username = $1", validUsername)
         // nameToBeGreeted.numberOfGreetings++;
-      } else {
+      } else if (!nameToBeGreeted) {
         await db.none("INSERT INTO greeting.greetings (username, counter) values ($1, $2)", [validUsername, 1])
       }
     } else {

@@ -2,7 +2,7 @@ import assert from "assert"
 import greetingsApp from "../greetings.js";
 import pgPromise from "pg-promise";
 import "dotenv/config";
-import fs from "fs";
+// import fs from "fs";
 
 // instance
 const pgp = pgPromise({});
