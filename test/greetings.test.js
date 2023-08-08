@@ -2,7 +2,6 @@ import assert from "assert";
 import greetingsApp from "../greetings.js";
 import pgPromise from "pg-promise";
 import "dotenv/config";
-import fs from "fs";
 
 // instance
 const pgp = pgPromise({});
@@ -12,78 +11,110 @@ const connectionString = process.env.DB_URL;
 
 const db = pgp(connectionString);
 
-describe("greetingsApp", () => {
-    this.timeout(7000);
-    const greetings = greetingsApp(db);
+describe("greetingsApp", function () {
+    this.timeout(6000);
+
     beforeEach(async function () {
-    // try {
-      await db.none(
-        "TRUNCATE TABLE greeting.greetings RESTART IDENTITY CASCADE"
-      );
-    // } catch (error) {
-    //   console.log(error);
-    //   throw error;
-    // }
-  });
+        try {
+            await db.none(
+                "TRUNCATE TABLE greeting.greetings RESTART IDENTITY CASCADE"
+            );
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    });
 
-  it("should be able to add a user and get a user", async () => {
-    // try {
-      const greetings = greetingsApp(db);
-      await greetings.setValidUsername("tom");
+    it("should be able to add a user and get a user", async () => {
+        try {
+            const greetings = greetingsApp(db);
+            await greetings.setValidUsername("tom", "English");
 
-      assert.deepStrictEqual(
-        [{ id: 1, username: "tom", counter: 1 }],
-        await greetings.getUserData("tom")
-      );
-    // } catch (error) {
-    //   console.log(error);
-    //   throw error;
-    // }
-  });
 
-  it("should be able to add multiple users and get all users", async () => {
-    try {
-      await greetings.setValidUsername("tom");
-      await greetings.setValidUsername("kat");
+            assert.deepStrictEqual(
+                [{ id: 1, username: "tom", counter: 1 }],
+                await greetings.getUserData("tom")
+            );
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    });
 
-      assert.deepStrictEqual(
-        [
-          { id: 1, username: "tom", counter: 2 },
-          { id: 2, username: "kat", counter: 1 }
-        ],
-        await greetings.greetedUsers()
-      );
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  });
+    it("should be able to add multiple users and get all users", async () => {
+        try {
+            const greetings = greetingsApp(db);
 
-  after(() => {
-    db.$pool.end;
-  });
+            await greetings.setValidUsername("tom", "Venda");
+            await greetings.setValidUsername("kat", "IsiXhosa");
 
-  // it("should be able to greet a username in 'Venda'", async () => {
-  //     await greetings.setValidUsername('Tendani');
-  //     greetings.greetName("Venda");
+            assert.deepStrictEqual(
+                [
+                    { id: 1, username: "tom", counter: 1 },
+                    { id: 2, username: "kat", counter: 1 }
+                ],
+                await greetings.greetedUsers()
+            );
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    });
 
-  //     assert.equal('Nda, tendani', greetings.getGreeting());
-  // });
+    it("should be able to get the count of a username in the database", async () => {
+        try {
+            const greetings = greetingsApp(db);
 
-  // it("should be able to increment the counter by one", async () => {
-  //     await greetings.setValidUsername('Tendani');
+            await greetings.setValidUsername("kat", "IsiXhosa");
+            const counter = await greetings.greetingsCounter();
 
-  //     const counter = await greetings.greetingsCounter();
+            assert.equal(1, counter.count);
+        } catch (error) {
+            console.log(error);
+        }
+    })
 
-  //     assert.equal(1, counter.count);
-  // });
+    it("should be able to get the count of multiple usernames in the database", async () => {
+        try {
+            const greetings = greetingsApp(db);
 
-  // it("should be able to increment the counter by two", async () => {
-  //     await greetings.setValidUsername('Tendani');
-  //     await greetings.setValidUsername('Ngomso');
+            await greetings.setValidUsername("kat", "IsiXhosa");
+            await greetings.setValidUsername("kat", "IsiXhosa");
+            await greetings.setValidUsername("tom", "Venda");
 
-  //     const counter = await greetings.greetingsCounter();
+            const counter = await greetings.greetingsCounter();
 
-  //     assert.equal(2, counter.count);
-  // });
+            assert.equal(2, counter.count);
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
+    after(() => {
+        db.$pool.end;
+    });
+
+    // it("should be able to greet a username in 'Venda'", async () => {
+    //     await greetings.setValidUsername('Tendani');
+    //     greetings.greetName("Venda");
+
+    //     assert.equal('Nda, tendani', greetings.getGreeting());
+    // });
+
+    // it("should be able to increment the counter by one", async () => {
+    //     await greetings.setValidUsername('Tendani');
+
+    //     const counter = await greetings.greetingsCounter();
+
+    //     assert.equal(1, counter.count);
+    // });
+
+    // it("should be able to increment the counter by two", async () => {
+    //     await greetings.setValidUsername('Tendani');
+    //     await greetings.setValidUsername('Ngomso');
+
+    //     const counter = await greetings.greetingsCounter();
+
+    //     assert.equal(2, counter.count);
+    // });
 });
