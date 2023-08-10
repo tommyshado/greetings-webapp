@@ -11,6 +11,8 @@ const connectionString = process.env.DB_URL;
 
 const db = pgp(connectionString);
 
+console.log(db);
+
 describe("greetingsApp", function () {
     this.timeout(6000);
 
