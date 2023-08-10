@@ -7,9 +7,9 @@ import "dotenv/config";
 const pgp = pgPromise();
 
 // we are using a special test database for the tests
-const connectionString = process.env.DB_URL;
+const connectionString = process.env.DB_URL || "postgresql://localhost:5432/greetings-webapp-db";
 
-const db = pgp(connectionString).connect();
+const db = pgp(connectionString);
 
 console.log(db);
 
