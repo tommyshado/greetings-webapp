@@ -13,8 +13,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env: 
-      DB_LINK: "postgres://tommyshado:yzrNH0TDiKbqCMAlNzWP62tWqWLQ6Oqy@dpg-cj2fspp8g3n1jkihu9dg-a.oregon-postgres.render.com/greetings_app_database?ssl=true"
 
 
     strategy:
