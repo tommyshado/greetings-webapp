@@ -90,6 +90,28 @@ describe("greetingsApp", function () {
         }
     })
 
+
+
+    it("should be able to update the counter of a username in the database", async () => {
+        try {
+            const greetings = greetingsApp(db);
+
+            await greetings.setValidUsername("anele", "IsiXhosa");
+            await greetings.setValidUsername("anele", "English");
+            await greetings.setValidUsername("nicholas", "Venda");
+
+            assert.deepStrictEqual(
+                [
+                    { id: 1, username: "anele", counter: 2 },
+                    { id: 2, username: "nicholas", counter: 1 }
+                ],
+                await greetings.greetedUsers()
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    })
+
     after(() => {
         db.$pool.end;
     });
