@@ -9,7 +9,7 @@ const pgp = pgPromise();
 // we are using a special test database for the tests
 const connectionString = process.env.DB_URL;
 
-const db = pgp(connectionString);
+const db = pgp(connectionString).connect();
 
 console.log(db);
 
