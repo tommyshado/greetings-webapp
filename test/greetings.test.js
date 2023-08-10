@@ -4,7 +4,7 @@ import pgPromise from "pg-promise";
 import "dotenv/config";
 
 // instance
-const pgp = pgPromise({});
+const pgp = pgPromise();
 
 // we are using a special test database for the tests
 const connectionString = process.env.DB_URL;
