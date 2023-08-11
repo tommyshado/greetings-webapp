@@ -82,7 +82,7 @@ const greetingsApp = db => {
   };
 
   const getMessage = () => {
-    greeting = "";
+    // greeting = "";
     return { 
       message
     }
