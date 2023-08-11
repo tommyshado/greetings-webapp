@@ -56,7 +56,7 @@
             </form>
 
             <form action="/reset" method="post">
-                <button type="submit" class="btn btn-outline-primary resetBtn"> Reset</button>
+                <button type="submit" class="btn btn-outline-primary resetBtn" onclick="confirmReset()"> Reset</button>
             </form>
 
             {{!-- element for the greeting --}}
@@ -64,6 +64,21 @@
             
         </div>
     </div>
+
+    <script>
+
+        function confirmReset() {
+            return confirm('Are you sure you want to reset the data?');
+        } 
+
+        setTimeout(function() {
+            const errorMessages = document.querySelector(".errorMsg");
+            if (errorMessages) {
+                errorMessages.style.display = "none";
+            }
+        }, 3000)
+
+    </script>
 </body>
 
 </html>
