@@ -15,11 +15,13 @@ const greeting = greetingsLogic => {
         const greetMessage = req.flash("greeting")[0];
         const errorMessage = req.flash("errorMessage")[0];
         const greetCounter = await greetingsLogic.greetingsCounter();
+        const alert = greetingsLogic.addAlert();
 
         res.render("index", {
             greet: greetMessage,
             msg: errorMessage,
-            counter: greetCounter
+            counter: greetCounter,
+            getAlert: alert
         })
     };
 

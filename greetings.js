@@ -87,6 +87,8 @@ const greetingsApp = db => {
     }
   };
 
+  const addAlert = () => Object.values(getMessage())[0] !== "" ? "alert alert-primary" : "";
+
   const resetApp = async () => {
     greeting = "";
     message = "";
@@ -101,6 +103,7 @@ const greetingsApp = db => {
     greetedUsers,
     getUserData,
     getMessage,
+    addAlert,
     resetApp
   };
 };

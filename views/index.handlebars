@@ -19,7 +19,7 @@
                     <p id="counter">{{counter.count}}</p>
                 </div>
             </div>
-            <p class="danger errorMsg">{{msg.message}}</p>
+            <p class="danger errorMsg {{getAlert}}" role="alert">{{msg.message}}</p>
 
             <form action="/sendGreeting" method="post">
                 <div class="col-12 box-model">
