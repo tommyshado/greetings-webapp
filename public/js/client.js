@@ -6,7 +6,7 @@ if (errorMessages !== "") {
 }
 
 resetBtn.addEventListener("click", (event) => {
-    if (!confirm("Do you want to reset the data?")) {
+    if (!window.confirm("Do you want to reset the data?")) {
         event.preventDefault();
     };
 });
