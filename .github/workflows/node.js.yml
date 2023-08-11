@@ -31,4 +31,4 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
       env: 
-        DB_LINK: "postgres://tommyshado:yzrNH0TDiKbqCMAlNzWP62tWqWLQ6Oqy@dpg-cj2fspp8g3n1jkihu9dg-a.oregon-postgres.render.com/greetings_app_database?ssl=true"
+        DB_URL: "postgres://tommyshado:yzrNH0TDiKbqCMAlNzWP62tWqWLQ6Oqy@dpg-cj2fspp8g3n1jkihu9dg-a.oregon-postgres.render.com/greetings_app_database?ssl=true"
