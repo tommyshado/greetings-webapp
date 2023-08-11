@@ -28,12 +28,12 @@ describe("greetingsApp", function () {
     it("should be able to add a user and get a user", async () => {
         try {
             const greetings = greetingsApp(db);
-            await greetings.setValidUsername("tom", "English");
+            await greetings.setValidUsername("katlego", "English");
 
 
             assert.deepStrictEqual(
-                [{ id: 1, username: "tom", counter: 1 }],
-                await greetings.getUserData("tom")
+                [{ id: 1, username: "katlego", counter: 1 }],
+                await greetings.getUserData("katlego")
             );
         } catch (error) {
             console.log(error);
@@ -45,13 +45,13 @@ describe("greetingsApp", function () {
         try {
             const greetings = greetingsApp(db);
 
-            await greetings.setValidUsername("tom", "Venda");
-            await greetings.setValidUsername("kat", "IsiXhosa");
+            await greetings.setValidUsername("malebo", "Venda");
+            await greetings.setValidUsername("tendani", "IsiXhosa");
 
             assert.deepStrictEqual(
                 [
-                    { id: 1, username: "tom", counter: 1 },
-                    { id: 2, username: "kat", counter: 1 }
+                    { id: 1, username: "malebo", counter: 1 },
+                    { id: 2, username: "tendani", counter: 1 }
                 ],
                 await greetings.greetedUsers()
             );
@@ -65,7 +65,7 @@ describe("greetingsApp", function () {
         try {
             const greetings = greetingsApp(db);
 
-            await greetings.setValidUsername("kat", "IsiXhosa");
+            await greetings.setValidUsername("bjorn", "IsiXhosa");
             const counter = await greetings.greetingsCounter();
 
             assert.equal(1, counter.count);
