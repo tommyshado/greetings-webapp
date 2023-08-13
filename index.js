@@ -5,20 +5,13 @@ import bodyParser from "body-parser";
 import flash from "express-flash";
 import session from "express-session";
 
-import chalk from 'chalk';
-
 const app = express();
 
-// import Client from "pg/lib/client.js";
-
-// const pgp = require("pg-promise")();
 import pgPromise from "pg-promise";
 
 const pgp = pgPromise();
 
 import "dotenv/config";
-
-
 
 // routes modules
 import greeting from "./routes/greeting.js";
@@ -50,7 +43,6 @@ if (process.env.NODE_ENV === "production") {
 
 const db = pgp(config);
 
-
 // instance for logic
 const greetings = greetingsApp(db);
 
@@ -76,8 +68,6 @@ app.engine("handlebars", handlebarSetup);
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
-
-
 app.use(express.static("public"));
 
 // ROUTES:
@@ -93,9 +83,6 @@ app.get("/counter/:username", allGreeted.all);
 app.post("/reset", resetData.reset)
 
 const PORT = process.env.PORT || 3007;
-
-// database connection string
-// const dbConnectionString = pgP();
 
 app.listen(PORT, () => {
   console.log("app started at", PORT);

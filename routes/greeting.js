@@ -7,19 +7,21 @@ const greeting = greetingsLogic => {
         await greetingsLogic.greetName(req.body.lang);
 
         req.flash("greeting", greetingsLogic.getGreeting());
-        req.flash("errorMessage", await greetingsLogic.getMessage());
+        req.flash("message", await greetingsLogic.getMessage());
+
         res.redirect("/");
     };
 
     const getGreeting = async (req, res) => {
         const greetMessage = req.flash("greeting")[0];
-        const errorMessage = req.flash("errorMessage")[0];
+        const message = req.flash("message")[0];
+
         const greetCounter = await greetingsLogic.greetingsCounter();
         const alert = greetingsLogic.addAlert();
 
         res.render("index", {
             greet: greetMessage,
-            msg: errorMessage,
+            msg: message,
             counter: greetCounter,
             getAlert: alert
         })

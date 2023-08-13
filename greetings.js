@@ -1,5 +1,4 @@
 const greetingsApp = db => {
-//   const greetedUsernames = [];
 
   let validUsername = "";
   let greeting = "";
@@ -14,9 +13,6 @@ const greetingsApp = db => {
       if (pattern.test(lowerCaseName)) {
         validUsername = lowerCaseName;
   
-        // CHECK if the object in greetedUsernames with username key equals to the validUsername variable
-        // const nameToBeGreeted = greetedUsernames.find(obj => obj.username === validUsername);
-  
         let nameToBeGreeted = await db.oneOrNone(
           "SELECT username FROM greeting.greetings WHERE username = $1",
           validUsername
@@ -24,9 +20,10 @@ const greetingsApp = db => {
   
         if (nameToBeGreeted) {
           await db.none("UPDATE greeting.greetings SET counter = counter + 1 WHERE username = $1", validUsername)
-          // nameToBeGreeted.numberOfGreetings++;
+          
         } else if (!nameToBeGreeted && lang) {
-          await db.none("INSERT INTO greeting.greetings (username, counter) values ($1, $2)", [validUsername, 1])
+          await db.none("INSERT INTO greeting.greetings (username, counter) values ($1, $2)", [validUsername, 1]);
+
         }
       } else {
         message = "Please, enter a valid name. eg. ABCDEabcde";
@@ -47,6 +44,9 @@ const greetingsApp = db => {
       } else if (lang === "English") {
         greeting = `Hello, ${validUsername}`;
       }
+
+      // set message variable to an empty string
+      message = "";
       
     } else if (!validUsername && !lang) {
       message = "Please enter name and select language.";
@@ -58,16 +58,11 @@ const greetingsApp = db => {
 
   const getGreeting = () => greeting;
 
-  // when the getGreeting() returns a greeting, GET the length of the object inside greetedUsername
-  // OTHERWISE, the greetingsCounter() returns 0
-  // const greetingsCounter = () => getGreeting() ? greetedUsernames.length : 0;
-
   const greetingsCounter = async () => await db.oneOrNone("SELECT COUNT(username) FROM greeting.greetings");
 
   const greetedUsers = async () => await db.any("SELECT * FROM greeting.greetings ORDER BY counter DESC");
 
   const getUserData = async userName => {
-    // greetedUsernames.filter((userData) => userData.username === name);
 
     let database = await db.any("SELECT * FROM greeting.greetings");
     let userDataArray = [];
@@ -84,11 +79,14 @@ const greetingsApp = db => {
   const getMessage = () => {
     greeting = "";
     return { 
-      message
+      message,
     }
   };
 
-  const addAlert = () => Object.values(getMessage())[0] !== "" ? "alert alert-primary" : "";
+  const addAlert = () => {
+    if (getMessage().message) return "alert alert-danger";
+    else return "";
+  };
 
   const resetApp = async () => {
     greeting = "";
