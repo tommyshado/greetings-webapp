@@ -3,27 +3,31 @@
 const greeting = greetingsLogic => {
 
     const sendGreeting = async (req, res) => {
-        await greetingsLogic.setValidUsername(req.body.name, req.body.lang);
-        await greetingsLogic.greetName(req.body.lang);
+        const {name, lang} = req.body;
+        const validateName = await greetingsLogic.setValidUsername(name, lang);
+
+        !name && !lang ? req.flash("error", "Please enter name and select language.") : "";
+        validateName ? validateName : !validateName ? req.flash("error", "Please, enter a valid name. eg. ABCDEabcde") : "";
+        !lang && validateName ? req.flash("error", "Please, select a language.") : "";
+
+        await greetingsLogic.greetName(lang);
 
         req.flash("greeting", greetingsLogic.getGreeting());
-        req.flash("message", await greetingsLogic.getMessage());
 
         res.redirect("/");
     };
 
     const getGreeting = async (req, res) => {
         const greetMessage = req.flash("greeting")[0];
-        const message = req.flash("message")[0];
 
         const greetCounter = await greetingsLogic.greetingsCounter();
-        const alert = greetingsLogic.addAlert();
+        // const alert = greetingsLogic.addAlert();
 
         res.render("index", {
             greet: greetMessage,
-            msg: message,
+            errorMessage: req.flash("error")[0],
             counter: greetCounter,
-            getAlert: alert
+            // getAlert: alert
         })
     };
 

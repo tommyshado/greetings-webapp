@@ -19,7 +19,9 @@
                     <p id="counter">{{counter.count}}</p>
                 </div>
             </div>
-            <p class="errorMsg {{getAlert}}" role="alert">{{msg.message}}</p>
+            {{#if errorMessage}}
+                <p class="errorMsg" role="alert">{{errorMessage}}</p>
+            {{/if}}
 
             <form action="/sendGreeting" method="post">
                 <div class="col-12 box-model">
@@ -56,7 +58,7 @@
             </form>
 
             <form action="/reset" method="post">
-                <button type="submit" class="btn btn-outline-primary resetBtn" onclick="confirmReset()"> Reset</button>
+                <button type="submit" class="btn btn-outline-primary resetBtn" onclick="return confirmReset()"> Reset</button>
             </form>
 
             {{!-- element for the greeting --}}

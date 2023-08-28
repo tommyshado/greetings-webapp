@@ -23,18 +23,15 @@ const greetingsApp = db => {
           
         } else if (!nameToBeGreeted && lang) {
           await db.none("INSERT INTO greeting.greetings (username, counter) values ($1, $2)", [validUsername, 1]);
+          return true;
 
         }
-      } else {
-        message = "Please, enter a valid name. eg. ABCDEabcde";
-      }
-    } else {
-      message = "Please enter your name.";
+      } return false;
     }
+    return false;
   };
 
   const greetName = lang => {
-    
     if (validUsername && lang) {
       
       if (lang === "IsiXhosa") {
@@ -48,11 +45,6 @@ const greetingsApp = db => {
       // set message variable to an empty string
       message = "";
       
-    } else if (!validUsername && !lang) {
-      message = "Please enter name and select language.";
-
-    } else if (!lang) {
-      message = "Please, select a language.";
     }
   };
 
@@ -76,18 +68,6 @@ const greetingsApp = db => {
     return userDataArray;
   };
 
-  const getMessage = () => {
-    greeting = "";
-    return { 
-      message,
-    }
-  };
-
-  const addAlert = () => {
-    if (getMessage().message) return "alert alert-danger";
-    else return "";
-  };
-
   const resetApp = async () => {
     greeting = "";
     message = "";
@@ -101,8 +81,6 @@ const greetingsApp = db => {
     greetingsCounter,
     greetedUsers,
     getUserData,
-    getMessage,
-    addAlert,
     resetApp
   };
 };
