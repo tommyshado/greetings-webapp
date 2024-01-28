@@ -1,5 +1,5 @@
 import express from "express";
-import greetingsApp from "./greetings.js";
+import greetingsApp from "./services/greetings.js";
 import exphbs from "express-handlebars";
 import bodyParser from "body-parser";
 import flash from "express-flash";
@@ -18,6 +18,8 @@ import greeting from "./routes/greeting.js";
 import greetedUsers from "./routes/greeted_users.js";
 import allGreetedUsers from "./routes/users_data.js";
 import dataReset from "./routes/reset.js";
+
+import greetings from "./routes/greetings.js";
 
  // initialise session middleware - flash-express depends on it
  app.use(session({
@@ -44,13 +46,15 @@ if (process.env.NODE_ENV === "production") {
 const db = pgp(config);
 
 // instance for logic
-const greetings = greetingsApp(db);
+const Greetings = greetingsApp(db);
 
 // routes instances
 const greetingRoute = greeting(greetings);
 const greeted = greetedUsers(greetings);
 const allGreeted = allGreetedUsers(greetings);
 const resetData = dataReset(greetings);
+
+const GreetingsRoutes = greetings(Greetings);
 
 
 const handlebarSetup = exphbs.engine({
@@ -72,9 +76,9 @@ app.use(express.static("public"));
 
 // ROUTES:
 
-app.get("/", greetingRoute.getGreeting);
+app.get("/", GreetingsRoutes.home);
 
-app.post("/sendGreeting", greetingRoute.sendGreeting);
+app.post("/greet", GreetingsRoutes.addGreeting);
 
 app.get("/greeted", greeted.showGreeted);
 

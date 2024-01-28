@@ -1,86 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+<div class="container text-center">
+    <h1 class="box-model">Greet Exercise</h1>
+    <div class="row center">
 
-</head>
-<body>
-    <div class="container text-center">
-        <h1 class="box-model">Greet Exercise</h1>
-        <div class="row center">
-
-            <div class="col-12">
-                <div class="greetings-counter">
-                    <p id="counter">{{counter.count}}</p>
-                </div>
+        <div class="col-12">
+            <div class="greetings-counter">
+                <p id="counter">{{counter.count}}</p>
             </div>
-            {{#if errorMessage}}
-                <p class="errorMsg" role="alert">{{errorMessage}}</p>
-            {{/if}}
+        </div>
+        {{#if messages.error}}
+            <p class="messages" role="alert-danger">{{messages.error}}</p>
+        {{/if}}
 
-            <form action="/sendGreeting" method="post">
-                <div class="col-12 box-model">
+        {{#if messages.success}}
+            <p class="messages" role="alert-success">{{messages.success}}</p>
+        {{/if}}
 
-                    <label>Enter name:</label>
+        <form action="/greet" method="post">
+            <div class="col-12 box-model">
 
-                    <input type="text" name="name" class="nameString" placeholder="Enter your name" value="">
+                <label>Enter name:</label>
+
+                <input type="text" name="name" class="nameString" placeholder="Enter your name" value="">
+
+            </div>
+
+            <div class="col-12 box-model">
+                <div class="radio-buttons">
+
+                    <input type="radio" name="lang" class="language" value="IsiXhosa">IsiXhosa</input>
+                    <input type="radio" name="lang" class="language" value="Venda">Venda</input>
+                    <input type="radio" name="lang" class="language" value="English">English</input>
 
                 </div>
                 
+            </div>
 
-                <div class="col-12 box-model">
-                    <div class="radio-buttons">
+            {{!-- greet button --}}
 
-                        <input type="radio" name="lang" class="language" value="IsiXhosa">IsiXhosa</input>
-                        <input type="radio" name="lang" class="language" value="Venda">Venda</input>
-                        <input type="radio" name="lang" class="language" value="English">English</input>
+            <div>
+                <button type="submit" class="btn btn-outline-primary greetMeBtn">Greet user</button>
+            </div>
 
-                    </div>
-                    
-                </div>
+            <div>
+                {{!-- element for the greeted users --}}
+                <a href="/greeted" type="submit" class="btn btn-outline-primary greetMeBtn">Greeted users</a>
+            </div>
 
-                {{!-- greet button --}}
+        </form>
 
-                <div>
-                    <button type="submit" class="btn btn-outline-primary greetMeBtn">Greet user</button>
-                </div>
+        <form action="/reset" method="post">
+            <button type="submit" class="btn btn-outline-primary resetBtn" onclick="return confirmReset()"> Reset</button>
+        </form>
 
-                <div>
-                    {{!-- element for the greeted users --}}
-                    <a href="/greeted" type="submit" class="btn btn-outline-primary greetMeBtn">Greeted users</a>
-                </div>
+        {{!-- element for the greeting --}}
+        <p id="greet" class="box-model">{{messages.greeting}}</p>
 
-            </form>
-
-            <form action="/reset" method="post">
-                <button type="submit" class="btn btn-outline-primary resetBtn" onclick="return confirmReset()"> Reset</button>
-            </form>
-
-            {{!-- element for the greeting --}}
-            <p id="greet" class="box-model">{{greet}}</p>
-            
-        </div>
     </div>
-
-    <script>
-
-        function confirmReset() {
-            return confirm('Are you sure you want to reset the data?');
-        } 
-
-        setTimeout(function() {
-            const errorMessages = document.querySelector(".errorMsg");
-            if (errorMessages) {
-                errorMessages.style.display = "none";
-            }
-        }, 3000)
-
-    </script>
-</body>
-
-</html>
+</div>
