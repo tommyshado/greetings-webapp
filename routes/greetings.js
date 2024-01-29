@@ -1,6 +1,9 @@
 const greetingsRoutes = (greetings) => {
     const home = async (req, res) => {
-        res.render("index");
+        const all = await greetings.addedNames();
+        res.render("index", {
+            count: all.length
+        });
     };
 
     const addGreeting = async (req, res) => {
@@ -12,7 +15,7 @@ const greetingsRoutes = (greetings) => {
             return;
         };
 
-        if (lang === "") {
+        if (lang === undefined) {
             req.flash("error", "Please select a languge.");
             res.redirect("/");
             return;

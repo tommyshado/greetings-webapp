@@ -24,6 +24,10 @@ body {
     color: red;
 }
 
+.success {
+    color: green;
+}
+
 
 /* anchor tags */
 a {

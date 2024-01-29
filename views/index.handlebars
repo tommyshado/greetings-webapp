@@ -5,15 +5,15 @@
 
         <div class="col-12">
             <div class="greetings-counter">
-                <p id="counter">{{counter.count}}</p>
+                <p id="counter">{{count}}</p>
             </div>
         </div>
         {{#if messages.error}}
-            <p class="messages" role="alert-danger">{{messages.error}}</p>
+            <p class="messages danger" role="alert-danger">{{messages.error}}</p>
         {{/if}}
 
         {{#if messages.success}}
-            <p class="messages" role="alert-success">{{messages.success}}</p>
+            <p class="messages success" role="alert-success">{{messages.success}}</p>
         {{/if}}
 
         <form action="/greet" method="post">
