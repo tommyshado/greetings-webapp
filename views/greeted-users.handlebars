@@ -1,20 +1,25 @@
 <div class="row">
-    <h1>Greeted users data</h1>
+    <div class="col-12">
+        <h1 class="text-center mb-4">Greeted users data</h1>
 
-    <table class="table table-striped">
-        
-        <tr>
-            <th>Username</th>
-            <th>Number of greet</th>
-        </tr>
-
-        {{#each greetedUsers}}
-        <tr>
-            <td><a href="/filtered/{{name}}">{{name}}</a></td>
-            <td>{{count}}</td>
-        </tr>
-        {{/each}}
-
-    </table>
-    
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Username</th>
+                    <th>Number of greets</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each greetedUsers}}
+                <tr>
+                    <td><a href="/filtered/{{name}}">{{name}}</a></td>
+                    <td>{{count}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 d-flex justify-content-start mt-auto">
+        <a href="/" class="btn btn-primary btn-sm mb-3">Home</a>
+    </div>
 </div>
