@@ -1,36 +1,35 @@
-
 <div class="container text-center">
-    <h1 class="box-model">Greet Exercise</h1>
+    <h1 class="box-model" style="color: blue; font-size: 2em;">Greet Exercise</h1>
     <div class="row center">
 
         <div class="col-12">
             <div class="greetings-counter">
-                <p id="counter">{{count}}</p>
+                <p id="counter" style="font-weight: bold;">{{count}}</p>
             </div>
         </div>
         {{#if messages.error}}
-            <p class="messages danger" role="alert-danger">{{messages.error}}</p>
+            <p class="messages danger" role="alert-danger" style="color: red;">{{messages.error}}</p>
         {{/if}}
 
         {{#if messages.success}}
-            <p class="messages success" role="alert-success">{{messages.success}}</p>
+            <p class="messages success" role="alert-success" style="color: green;">{{messages.success}}</p>
         {{/if}}
 
         <form action="/greet" method="post">
             <div class="col-12 box-model">
 
-                <label>Enter name:</label>
+                <label style="font-style: italic;">Enter name:</label>
 
-                <input type="text" name="name" class="nameString" placeholder="Enter your name" value="">
+                <input type="text" name="name" class="nameString" placeholder="Enter your name" value="" style="border: 1px solid black; padding: 5px;">
 
             </div>
 
             <div class="col-12 box-model">
                 <div class="radio-buttons">
 
-                    <input type="radio" name="lang" class="language" value="IsiXhosa">IsiXhosa</input>
-                    <input type="radio" name="lang" class="language" value="Venda">Venda</input>
-                    <input type="radio" name="lang" class="language" value="English">English</input>
+                    <input type="radio" name="lang" class="language" value="IsiXhosa"><label style="margin-right: 10px;">IsiXhosa</label>
+                    <input type="radio" name="lang" class="language" value="Venda"><label style="margin-right: 10px;">Venda</label>
+                    <input type="radio" name="lang" class="language" value="English"><label style="margin-right: 10px;">English</label>
 
                 </div>
                 
@@ -39,22 +38,23 @@
             {{!-- greet button --}}
 
             <div>
-                <button type="submit" class="btn btn-outline-primary greetMeBtn">Greet user</button>
+                <button type="submit" class="btn btn-outline-primary greetMeBtn mt-2" style="background-color: lightblue; border: 1px solid blue;">Greet user</button>
             </div>
 
             <div>
                 {{!-- element for the greeted users --}}
-                <a href="/greeted" type="submit" class="btn btn-outline-primary greetMeBtn">Greeted users</a>
+                <a href="/greeted" type="submit" class="btn btn-outline-primary greetMeBtn mt-2" style="background-color: lightblue; border: 1px solid blue;">Greeted users</a>
             </div>
 
         </form>
 
         <form action="/reset" method="post">
-            <button type="submit" class="btn btn-outline-primary resetBtn" onclick="return confirmReset()"> Reset</button>
+            <button type="submit" class="btn btn-outline-primary resetBtn mt-2" onclick="return confirmReset()" style="background-color: lightblue; border: 1px solid blue;"> Reset</button>
         </form>
 
         {{!-- element for the greeting --}}
-        <p id="greet" class="box-model">{{messages.greeting}}</p>
+        <p id="greet" class="box-model mt-8" style="font-weight: bold; font-size: 2em;">{{messages.greeting}}</p>
 
     </div>
 </div>
+
