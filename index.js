@@ -14,10 +14,6 @@ const pgp = pgPromise();
 import "dotenv/config";
 
 // routes modules
-import greeting from "./routes/greeting.js";
-import greetedUsers from "./routes/greeted_users.js";
-import allGreetedUsers from "./routes/users_data.js";
-import dataReset from "./routes/reset.js";
 
 import greetings from "./routes/greetings.js";
 
@@ -49,10 +45,6 @@ const db = pgp(config);
 const Greetings = greetingsApp(db);
 
 // routes instances
-const greetingRoute = greeting(greetings);
-const greeted = greetedUsers(greetings);
-const allGreeted = allGreetedUsers(greetings);
-const resetData = dataReset(greetings);
 
 const GreetingsRoutes = greetings(Greetings);
 
@@ -80,11 +72,11 @@ app.get("/", GreetingsRoutes.home);
 
 app.post("/greet", GreetingsRoutes.addGreeting);
 
-app.get("/greeted", greeted.showGreeted);
+app.get("/greeted", GreetingsRoutes.greeted);
 
-app.get("/counter/:username", allGreeted.all);
+app.get("/filtered/:username", GreetingsRoutes.filteredName);
 
-app.post("/reset", resetData.reset)
+app.post("/reset", GreetingsRoutes.reset)
 
 const PORT = process.env.PORT || 3007;
 

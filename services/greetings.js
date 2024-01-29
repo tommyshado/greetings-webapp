@@ -28,10 +28,15 @@ const greetingsApp = (db) => {
     ]);
   };
 
+  const deleteNames = async () => {
+    return await db.none("delete from greetings");
+  };
+
   return {
     addName,
     addedNames,
     filterForName,
+    deleteNames
   };
 };
 

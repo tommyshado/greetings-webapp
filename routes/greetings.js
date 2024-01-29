@@ -55,9 +55,31 @@ const greetingsRoutes = (greetings) => {
 
     };
 
+    const greeted = async (req, res) => {
+        const all = await greetings.addedNames();
+
+        res.render("greeted-users", {
+            greetedUsers: all
+        });
+    };
+
+    const filteredName = async (req, res) => {
+        const {username} = req.params;
+        const filter = await greetings.filterForName(username);
+        res.render("filtered", filter);
+    };
+
+    const reset = async (req, res) => {
+        await greetings.deleteNames();
+        res.redirect("/");
+    };
+
     return {
         home,
-        addGreeting
+        addGreeting,
+        greeted,
+        filteredName,
+        reset
     }
 };
 
