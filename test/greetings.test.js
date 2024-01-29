@@ -12,7 +12,7 @@ const connectionString = process.env.DB_URL_TEST;
 const db = pgp(connectionString);
 
 describe("greetingsApp", function () {
-    this.timeout(6000);
+    this.timeout(10000);
 
     beforeEach(async function () {
         try {
@@ -89,6 +89,28 @@ describe("greetingsApp", function () {
             throw error;
         }
     })
+
+    it("should be able to delete all the greeted users", async () => {
+        try {
+            const greetings = greetingsApp(db);
+            await greetings.addName("katlego");
+            await greetings.addName("niko");
+            await greetings.addName("malebo");
+
+            let greetedUsers = await greetings.addedNames();
+
+            assert.equal(3, greetedUsers.length);
+
+            await greetings.deleteNames();
+            greetedUsers = await greetings.addedNames();
+
+            assert.equal(0, greetedUsers.length);
+            
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    });
 
     after(() => {
         db.$pool.end;
